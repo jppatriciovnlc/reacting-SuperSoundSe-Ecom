@@ -32,6 +32,7 @@ export const Nav = styled.nav`
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 20px;
+    justify-content: right;
 
     @media (max-width: 450px) {
       height: 150vh;
@@ -49,6 +50,7 @@ export const NavSearchContainer = styled.form`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    display: none;
 
     
     @media (max-width: 450px) {
@@ -88,6 +90,7 @@ export const NavCart = styled.button`
     font-weight: 600;
     transition: 1s;
     cursor: pointer;
+    
 
     &:hover {
         background: #fff;

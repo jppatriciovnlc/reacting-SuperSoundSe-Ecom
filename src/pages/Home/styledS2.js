@@ -80,6 +80,7 @@ export  const CardImageContainer = styled.div`
 
 export  const CardImage = styled.img`
     height: auto;
+    max-height: 250px;
     max-width: 100%;
 `
 
@@ -92,6 +93,11 @@ export  const CardButton = styled.button `
     background-color: #f26522;
     color: #fff;
     margin-top: 20px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #d6ab33;
+    }
 `
 
 export  const CardButtonP = styled.p `

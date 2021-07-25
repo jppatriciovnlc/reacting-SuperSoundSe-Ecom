@@ -2,6 +2,7 @@ import * as S from './styled';
 import { MdAddCircle, MdRemoveCircle } from'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
+import { render } from '@testing-library/react';
 
 
 export default function Cart () {
@@ -15,6 +16,14 @@ export default function Cart () {
     const [ estado, setEstado ] = useState('');
     const [ rua, setRua ] = useState('');
     const [ ruaNumero, setRuaNumero ] = useState('');
+
+    let itensCarrinho = localStorage.getItem('itemsCarrinho');
+    
+    let items = JSON.parse(itensCarrinho)
+
+    
+
+    
 
     
 
@@ -33,7 +42,32 @@ export default function Cart () {
             numero : ruaNumero
         }
         localStorage.setItem('endereco', JSON.stringify(endereco))
+    }
 
+    function addCart(item){        
+        items.map(el => {
+            if( el.id == item.id){
+                el.quantidade++;                
+            }
+        })
+        console.log(items)
+        localStorage.setItem('itemsCarrinho', JSON.stringify(items)) 
+    }
+
+    function removeCart(item){
+        let auxId
+        items.map(el => {
+            if( el.id == item.id){
+                el.quantidade--;                
+            }
+            if(el.quantidade == 0){
+                auxId = el.id
+            }
+        })
+        items = items.filter(el => el.id !== auxId)
+        console.log(items)
+        localStorage.setItem('itemsCarrinho', JSON.stringify(items)) 
+        
     }
 
 
@@ -46,50 +80,55 @@ export default function Cart () {
                 </S.Header>
                 <S.Body>
                     <S.Table>
-                        <S.TR>
-                            <S.TH>
-                                Quantidade
-                            </S.TH>
-                            <S.TH>
-                                Produto
-                            </S.TH>
-                            <S.TH>
-                                Preço
-                            </S.TH>
-                            <S.TH>
-                                Ações
-                            </S.TH>
-                        </S.TR>
-                        <S.TR>
-                            <S.TD>
-                                1
-                            </S.TD>
-                            <S.TD>
-                                Guitarra
-                            </S.TD>
-                            <S.TD>
-                                R$ 170,00
-                            </S.TD>
-                            <S.TD>
-                                <S.ButtonAdd>
-                                    <MdAddCircle/>
-                                </S.ButtonAdd>
-                                <S.ButtonRemove>
-                                    <MdRemoveCircle/>
-                                </S.ButtonRemove>
-                            </S.TD>
-                        </S.TR>
+                        <thead>
+                            <S.TR>
+                                <S.TH>
+                                    Quantidade
+                                </S.TH>
+                                <S.TH>
+                                    Produto
+                                </S.TH>
+                                <S.TH>
+                                    Preço
+                                </S.TH>
+                                
+                            </S.TR>
+                        </thead>
+                        
+                        <tbody>
+                            {
+                                items.map((item,i) => {
+                                    return [
+                                        <S.TR key={i}>
+                                        <S.TD>
+                                            {item.quantidade}
+                                        </S.TD>
+                                        <S.TD>
+                                            { item.name }
+                                        </S.TD>
+                                        <S.TD>
+                                            R$ { item.price}
+                                        </S.TD>                                        
+                                    </S.TR>
+                                    ]}
+                                    
+                                )
+                            }
+                        </tbody>
                     </S.Table>
 
                     <S.Table2>
-                        <S.TR>
-                           <S.TH>
-                                Total
-                            </S.TH>
+                        <tbody>
+                            <S.TR>
                             <S.TH>
-                                R$ 170,00
-                            </S.TH>
-                        </S.TR>
+                                    Total
+                                </S.TH>
+                                <S.TH>
+                                    R$ 170,00
+                                </S.TH>
+                            </S.TR>
+                        </tbody>
+                        
                     </S.Table2>
 
                     <S.SectionForm>
