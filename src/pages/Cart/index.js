@@ -21,9 +21,9 @@ export default function Cart () {
     
     let items = JSON.parse(itensCarrinho)
 
-    
+    let total = 0;
 
-    
+    calculaTotal();
 
     
 
@@ -68,6 +68,14 @@ export default function Cart () {
         console.log(items)
         localStorage.setItem('itemsCarrinho', JSON.stringify(items)) 
         
+    }
+
+    function calculaTotal() {
+        total = 0;
+        items.map(el => {
+            total += parseFloat(el.price);
+        })
+        console.log(total)
     }
 
 
@@ -124,7 +132,7 @@ export default function Cart () {
                                     Total
                                 </S.TH>
                                 <S.TH>
-                                    R$ 170,00
+                                    R$ {total}
                                 </S.TH>
                             </S.TR>
                         </tbody>
